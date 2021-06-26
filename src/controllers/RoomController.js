@@ -14,7 +14,7 @@ module.exports = {
             
             /* Verificar se esse numero ja existe */
             const roomsExistIds = await db.all(`SELECT id FROM rooms`)
-            isRoom = roomsExistIds.some(roomsExistIds => roomExistId === roomId)
+            isRoom = roomsExistIds.some(roomExistId => roomExistId === roomId)
     
             if(!isRoom){
                 /* Insere a sala no banco */
@@ -35,5 +35,15 @@ module.exports = {
         await db.close()
 
         res.redirect(`/room/${roomId}`)
+    },
+
+    async open(req,res) {
+        const db = await Database()
+        const roomId = req.params.room
+        const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} AND read = 0`)
+        const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} AND read = 1`)
+        
+        
+        res.render('room', {roomId: roomId, questions: questions, questionsRead: questionsRead})
     }
 }
