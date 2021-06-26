@@ -5,18 +5,32 @@ module.exports = {
         const db = await Database()
         const pass = req.body.password
         let roomId = ""
+        let isRoom = true
+        while(isRoom){
+            /* Gera um numero da sala */
+            for(var i = 0; i < 6; i++) {
+                roomId += Math.floor(Math.random()*10).toString()
+            }
+            
+            /* Verificar se esse numero ja existe */
+            const roomsExistIds = await db.all(`SELECT id FROM rooms`)
+            isRoom = roomsExistIds.some(roomsExistIds => roomExistId === roomId)
+    
+            if(!isRoom){
+                /* Insere a sala no banco */
+                await db.run(`INSERT INTO rooms (
+                    id,
+                    pass
+                ) VALUES (
+                    ${parseInt(roomId)},
+                    ${pass}
+                )`)
+            }
 
-        for(var i = 0; i < 6; i++) {
-            roomId += Math.floor(Math.random()*10).toString()
+
+
         }
 
-        await db.run(`INSERT INTO rooms (
-            id,
-            pass
-        ) VALUES (
-            ${parseInt(roomId)},
-            ${pass}
-        )`)
 
         await db.close()
 
