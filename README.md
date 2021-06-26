@@ -4,4 +4,6 @@
 The objective is create a website with rooms where the guest can make anonymous questions to the host.
 
 ## Demo
+<p align="center">
 <img src="./.github/demo.gif" alt="Project's Demo">
+</p>
